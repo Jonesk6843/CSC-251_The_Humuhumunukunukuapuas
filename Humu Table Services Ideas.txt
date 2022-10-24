@@ -1,0 +1,39 @@
+==Java Project==
+Seat Reservations Project
+"You are a reservation buisness that provides tables and chairs for a service."
+"How many tables do they need?"
+"How many people are going to be there."
+	-Square tables. One per side.
+	-1 Table =  1-4 Guests
+	-2 Tables = 5 to 6 Guests
+	-3 Tables =  7 to 8 Guests
+		.
+		.
+		.
+-Use an object for each of the tables.
+-Tables can only be combined in a rectangular fashion.
+-provide output of how many tables will be provided.
+-Output a billing statement.
+-$20 dollars per table (prone to change)
+-12 max per table.
+-5th table = 10% off
+-10th table = 15% off
+
+==============
+Min table placement
+preferred table placement
+
+===Print====
+Humu Table Services
+
+Event Planner?: (Yes/No) <--Determines discount
+Number of guests:
+Number tables: (numSeats - 4)/2 = tableTops
+Preferred Tables: (numSeats % maxCapacity) <---Divided = reccomendedTops
+
+Subtotal: 
+Tax:
+Discount: <---Event planners get discounts (20%)
+Total:
+
+Thank you for using Humu Table Services!
