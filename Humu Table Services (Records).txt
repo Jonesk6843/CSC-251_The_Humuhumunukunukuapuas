@@ -23,9 +23,9 @@ Record | # People | Tables needed | Extra
       # Tables: 78
       # Chairs: 177
       # Extra chairs: 13
+------------------------------------------------
 
-Tables to People
-----------------
+
 Table  People
 ----------------
 1      4
