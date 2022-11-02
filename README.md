@@ -29,8 +29,8 @@ Kent - Taylor - Ciara
 <p> </p>
 <p>Event Planner?: (Yes/No) <--Determines discount</p>
 <p>Number of guests:</p>
-<p>Number tables: <b>(numSeats - 4)/2 = tableTops</b></p>
-<p>Preferred Tables: <b>(numSeats % maxCapacity) <---Divided = reccomendedTops</b></p>
+<p>Number tables: (numSeats - 4)/2 = tableTops</p>
+<p>Preferred Tables: (numSeats % maxCapacity) <---Divided = reccomendedTops</p>
 <p> </p>
 <p>Subtotal: </p>
 <p>Tax:</p>
