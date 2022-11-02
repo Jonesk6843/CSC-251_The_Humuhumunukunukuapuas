@@ -38,10 +38,3 @@ Kent - Taylor - Ciara
 <p>Total:</p>
 <p> </p>
 <p>Thank you for using Humu Table Services!</p>
-
-
-<style>
-b {
-  color: White;
-}
-</style>
