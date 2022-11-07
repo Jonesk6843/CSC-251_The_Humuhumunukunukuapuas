@@ -55,5 +55,7 @@ public class Group_Project {
         System.out.println("Number of tables: " + numTables);
         System.out.println("Number of chairs: " + totalChairs);
         System.out.println("Number of extra chairs: " + extraChairs);
+        
+        new Project_SaveInvoice_JForm().setVisible(true);
     }
 }
