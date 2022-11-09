@@ -10,7 +10,6 @@ Kent - Taylor - Ciara
 <h3>Seat Reservations Projects</h3>
 <p>"You are a reservation buisness that provides tables and chairs for a service."</p>
 <p>"How many tables do they need?"</p>
-<p>"How many people are going to be there."</p>
 <ol>
   <li>Square Tables. One guest per side.<li>
   <li> Tables can only be set in a rectangular fashion.</li>
@@ -21,7 +20,10 @@ Kent - Taylor - Ciara
 <p>Use an object for each of the tables.</p>
 <p>provide output of how many tables will be provided.</p>
 <p>output a billing statement</p>
-<p>20$ per table (prone to change)</p>
+<p>20$ per table (includes chairs)</p>
+<p>Separate chairs/Tables <--- Separate Program</p>
+<p>price per chair - $5</p>
+<p>price per table - $15</p>
 <p>5th table = 10% off</p>
 <p>10th table = 15% off</p>
 <p>===Print====</p>
