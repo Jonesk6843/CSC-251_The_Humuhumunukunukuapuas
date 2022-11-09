@@ -51,6 +51,7 @@ public class Group_Project {
             totalChairs = 4;
             numTables = 1;
         }
+        
     }
     
     public static int ExtraChairs()
@@ -68,14 +69,20 @@ public class Group_Project {
     {
         initialPrice =  totalChairs * 20; //calculate initial Price
         taxValue = initialPrice * 0.07; //Calculate tax value
+        priceTotal = initialPrice + taxValue; //Calculate total price
         
         //Calculate discount if user is event planner
-        if (discount > 0)
+        if (numTables >= 5 && numTables < 10)
         {
-            //Input deductions
+            discount = initialPrice * 0.05;
+            priceTotal = priceTotal - discount; //Calculate total price afer discount
+        }
+        else if (numTables >= 10)
+        {
+            discount = initialPrice * 0.1;
+            priceTotal = priceTotal - discount; //Calculate total price afer discount
         }
         
-        priceTotal = initialPrice + taxValue; //Calculate total price
     }
       
     public static void DisplayResults()
