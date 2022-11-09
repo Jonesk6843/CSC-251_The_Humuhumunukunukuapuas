@@ -5,12 +5,17 @@
  */
 package group_project;
 
+import static group_project.Group_Project.discount;
 import static group_project.Group_Project.extraChairs;
+import static group_project.Group_Project.initialPrice;
 import static group_project.Group_Project.numPeople;
 import static group_project.Group_Project.numTables;
+import static group_project.Group_Project.priceTotal;
+import static group_project.Group_Project.taxValue;
 import static group_project.Group_Project.totalChairs;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.NumberFormat;
 
 
 /**
@@ -44,7 +49,7 @@ public class Project_SaveInvoice_JForm
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         SI_FileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
-        SI_FileChooser.setApproveButtonText("");
+        SI_FileChooser.setApproveButtonText("Save");
         SI_FileChooser.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -71,18 +76,25 @@ public class Project_SaveInvoice_JForm
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void SI_FileChooserActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_SI_FileChooserActionPerformed
     {//GEN-HEADEREND:event_SI_FileChooserActionPerformed
- 
+        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+       
         try(FileWriter fWriter = new FileWriter (SI_FileChooser.getSelectedFile()+".txt"))
         {
+            fWriter.write("Humu Table Services" + "\n" + "_________________" + "\n" + "\n");
             fWriter.write("Number of people in your group: " + numPeople + "\n" 
                     + "Number of tables: " + numTables + "\n" 
                     + "Number of chairs: " + totalChairs + "\n"
-                    + "Number of extra chairs: " + extraChairs);
-                    
+                    + "Number of extra chairs: " + extraChairs + "\n" + "\n"
+                    + "_________________" + "\n"
+                    + "Subtotal: " + formatter.format(initialPrice)+ "\n"
+                    + "Tax: " + formatter.format(taxValue) + "\n" 
+                    + "Discount: " + formatter.format(discount) + "\n"
+                    + "Total: " + formatter.format(priceTotal) + "\n");
         }
         
         catch (IOException e)
