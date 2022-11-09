@@ -47,6 +47,7 @@ public class Project_SaveInvoice_JForm
         SI_FileChooser = new javax.swing.JFileChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setAlwaysOnTop(true);
 
         SI_FileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
         SI_FileChooser.setApproveButtonText("Save");
