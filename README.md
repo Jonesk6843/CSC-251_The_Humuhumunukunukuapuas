@@ -23,13 +23,13 @@ CSC-251 Groups for 2nd 8-week
 <h3>Seat Reservations Projects</h3>
 <p>"You are a reservation buisness that provides tables and chairs for a service."</p>
 <p>"How many tables do they need?"</p>
-<ol>
-  <li>Square Tables. One guest per side.<li>
+<ul>
+  <li> Square Tables. One guest per side.</li>
   <li> Tables can only be set in a rectangular fashion.</li>
   <li> A table = 1 to 4 guests</li>
   <li> 2 tables = 5 to 6 guests</li>
   <li> 3 tables = 7 to 8 guests</li>
-</ol>
+</ul>
 <p>Use an object for each of the tables.</p>
 <p>provide output of how many tables will be provided.</p>
 <p>output a billing statement</p>
@@ -39,13 +39,14 @@ CSC-251 Groups for 2nd 8-week
 <p>price per table - $15</p>
 <p>5th table = 10% off</p>
 <p>10th table = 15% off</p>
-<p>===Print====</p>
+<br>
+<h1>Print Out</h1>
 <p>Humu Table Services</p>
 <p> </p>
 <p>Event Planner?: (Yes/No) <--Determines discount</p>
 <p>Number of guests:</p>
-<p>Number tables: (numSeats - 4)/2 = tableTops</p>
-<p>Preferred Tables: (numSeats % maxCapacity) <---Divided = reccomendedTops</p>
+<p>Number tables: (numGuests - 4)/2 + 1 = tableTops</p>
+<p>Extra chairs: (numGuests % 2) = extraChairs</p>
 <p> </p>
 <p>Subtotal: </p>
 <p>Tax:</p>
