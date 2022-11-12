@@ -1,8 +1,8 @@
 # CSC-251_The_Humuhumunukunukuapuas
 CSC-251 Groups for 2nd 8-week
 
-<a href="https://github.com/Jonesk6843" style="max-width: 50px; max-height: 50px; border-radius: 50%">
-  <img src="https://github.com/Jonesk6843.png?size=460" />
+<a href="https://github.com/Jonesk6843" >
+  <img src="https://github.com/Jonesk6843.png?size=460" style="max-width: 50px; max-height: 50px; border-radius: 50%"/>
 </a>
 <a href="https://github.com/TaylorBrown96">
   <img src="https://github.com/TaylorBrown96.png?size=460" />
