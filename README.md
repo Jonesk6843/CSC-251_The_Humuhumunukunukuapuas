@@ -2,6 +2,15 @@
 CSC-251 Groups for 2nd 8-week
 
 Kent - Taylor - Ciara
+<a href="https://github.com/Jonesk6843">
+  <img src="https://github.com/Jonesk6843.png?size=460" />
+</a>
+<a href="https://github.com/TaylorBrown96">
+  <img src="https://github.com/TaylorBrown96.png?size=460" />
+</a>
+<a href="https://github.com/CiaraM100104">
+  <img src="https://github.com/CiaraM100104.png?size=460" />
+</a>
 
 <image src = "https://img.theculturetrip.com/1440x807/smart/wp-content/uploads/2018/03/rhinecanthus-rectangulus.jpg">
 
