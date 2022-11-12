@@ -1,18 +1,19 @@
 # CSC-251_The_Humuhumunukunukuapuas
 CSC-251 Groups for 2nd 8-week
 
-<a href="https://github.com/Jonesk6843" target="_blank">
-    <img src="https://github.com/Jonesk6843.png" style="max-width: 50px; max-height: 50px; border-radius: 50%" />
-</a>
-<a href="https://github.com/TaylorBrown96" target="_blank">
-    <img src="https://github.com/TaylorBrown96.png" style="max-width: 50px; max-height: 50px; border-radius: 50%" />
-</a>
-<a href="https://github.com/CiaraM100104" target="_blank">
-    <img src="https://github.com/CiaraM100104.png" style="max-width: 50px; max-height: 50px; border-radius: 50%" />
-</a>
+<span class="">
+        <a class="avatar-link" data-hovercard-type="user" data-hovercard-url="/users/TaylorBrown96/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="https://github.com/TaylorBrown96">
+          <img class="avatar mr-2 avatar-user" src="https://avatars.githubusercontent.com/u/78773029?s=48&amp;v=4" width="24" height="24" alt="@TaylorBrown96"> 
+    </a>    
+    <a class="avatar-link" data-hovercard-type="user" data-hovercard-url="/users/Jonesk6843/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="https://github.com/Jonesk6843">
+          <img class="avatar mr-2 avatar-user" src="https://avatars.githubusercontent.com/u/70590712?s=48&amp;v=4" width="24" height="24" alt="@Jonesk6843"> 
+    </a>
+    <a class="avatar-link" data-hovercard-type="user" data-hovercard-url="/users/CiaraM100104/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="https://github.com/CiaraM100104">
+          <img class="avatar mr-2 avatar-user" src="https://avatars.githubusercontent.com/u/90720471?s=64&amp;v=4" width="24" height="24" alt="@CiaraM100104"> 
+    </a>
+</span>
 
 <image src = "https://img.theculturetrip.com/1440x807/smart/wp-content/uploads/2018/03/rhinecanthus-rectangulus.jpg">
-
 
 <h1>Java Project</h1>
 <h3>Seat Reservations Projects</h3>
