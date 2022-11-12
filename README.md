@@ -2,13 +2,13 @@
 CSC-251 Groups for 2nd 8-week
 
 <a href="https://github.com/Jonesk6843" target="_blank">
-    <img src="https://github.com/Jonesk6843.png?size=460" style="max-width: 50px; max-height: 50px; border-radius: 50%" />
+    <img src="https://github.com/Jonesk6843.png" style="max-width: 50px; max-height: 50px; border-radius: 50%" />
 </a>
 <a href="https://github.com/TaylorBrown96" target="_blank">
-    <img src="https://github.com/TaylorBrown96.png?size=460" style="max-width: 50px; max-height: 50px; border-radius: 50%" />
+    <img src="https://github.com/TaylorBrown96.png" style="max-width: 50px; max-height: 50px; border-radius: 50%" />
 </a>
 <a href="https://github.com/CiaraM100104" target="_blank">
-    <img src="https://github.com/CiaraM100104.png?size=460" style="max-width: 50px; max-height: 50px; border-radius: 50%" />
+    <img src="https://github.com/CiaraM100104.png" style="max-width: 50px; max-height: 50px; border-radius: 50%" />
 </a>
 
 <image src = "https://img.theculturetrip.com/1440x807/smart/wp-content/uploads/2018/03/rhinecanthus-rectangulus.jpg">
