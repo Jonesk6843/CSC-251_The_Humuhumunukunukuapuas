@@ -1,0 +1,29 @@
+Humu Table Services
+_________________
+{
+	Event Planner?: Yes/No
+}
+Number of people in your group:
+Number of tables:
+Number of chairs:
+Number of extra chairs:
+
+{
+	Extra ordered Chairs:
+	Extra ordered Tables:
+}
+_________________
+Subtotal:
+Tax:
+Total:
+{
+	Discount includes
+		-if they choose yes to event planner
+		-Promo code
+		-every 5th and 10th table
+		-DoYourOwnDelivery
+}
+Discount:
+New Total:
+
+Thank you for using Humu Table Services!
