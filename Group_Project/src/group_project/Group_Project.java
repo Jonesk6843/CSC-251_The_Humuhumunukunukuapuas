@@ -1,5 +1,6 @@
 package group_project;
 
+import java.text.NumberFormat;
 import java.util.*;
 
 public class Group_Project {
@@ -8,15 +9,59 @@ public class Group_Project {
     //Declaring global variables
     public static int numTables;
     public static int totalChairs;
-    public static int numPeople;
+    public static int NumPeople;
     public static int extraChairs;
     public static double initialPrice;
     public static double discount;
     public static double taxValue;
     public static double priceTotal;
     
+    public static String Recipt;
+    
     public static void main(String[] args) 
     {
+        boolean keep_going = true;
+        while(keep_going){
+            System.out.print("How would you like to use this program?\n" +
+                           "\t1. JFrame\n" +
+                           "\t2. Console\n" +
+                           ">");
+
+            switch (scnr.next()) {
+                case "1":
+                    new Custom_Order_JF().setVisible(true);
+                    keep_going = false;
+                    break;
+                case "2":
+                    Console();
+                    keep_going = false;
+                    break;
+                default:
+                    System.out.println("Please enter a valid option!");
+                    break;
+            }
+        }
+    }
+    
+    public static void Console(){
+        boolean keep_going = true;
+        while(keep_going){
+            System.out.print("Is this a custom order (y or n)\n>");
+
+            switch(scnr.next().toLowerCase()){
+                case "y":
+                    CustomOrderConsole();
+                    keep_going = false;
+                    break;
+                case "n":
+                    keep_going = false;
+                    break;
+                default:
+                    System.out.println("Please enter a valid option!");
+                    break;
+            }
+        }
+        
         //Get user inputs
         System.out.print("How many people are in your party?: ");
         while(!scnr.hasNextInt()) {
@@ -24,19 +69,51 @@ public class Group_Project {
             scnr.next();
             System.out.print("How many people are in your party?: ");
         }
-        numPeople = scnr.nextInt();
+        NumPeople = scnr.nextInt();
         
         //Calling calcluation methods and display results
         TableCalc();
-        priceCalculations();
-        DisplayResults();
+        priceCalc();
+        GenerateRecipt();
     }
     
+    public static void CustomOrderConsole(){
+        //Get num people
+        System.out.print("How many people are in your party?: ");
+        while(!scnr.hasNextInt()) {
+            System.out.println("Please enter a valid number!\n");
+            scnr.next();
+            System.out.print("How many people are in your party?: ");
+        }
+        int numPeople = scnr.nextInt();
+        
+        // Get num tables
+        System.out.print("How many tables do you need?: ");
+        while(!scnr.hasNextInt()) {
+            System.out.println("Please enter a valid number!\n");
+            scnr.next();
+            System.out.print("How many tables do you need?: ");
+        }
+        int NumTables = scnr.nextInt();
+        
+        // Get num chairs
+        System.out.print("How many chairs do you need?: ");
+        while(!scnr.hasNextInt()) {
+            System.out.println("Please enter a valid number!\n");
+            scnr.next();
+            System.out.print("How many chairs do you need?: ");
+        }
+        int NumChairs = scnr.nextInt();
+        
+        CustomOrder(numPeople, NumTables, NumChairs);
+    }
+    
+    
     public static void TableCalc(){
-        if (numPeople >= 5)
+        if (NumPeople >= 5)
         {
-            numTables = (numPeople - 4) / 2 + 1;
-            int extras = (numPeople - 4) % 2;
+            numTables = (NumPeople - 4) / 2 + 1;
+            int extras = (NumPeople - 4) % 2;
             if (extras == 1)
             {
                 numTables++;
@@ -47,16 +124,15 @@ public class Group_Project {
         }
         else
         {
-            extraChairs = 4 - numPeople;
+            extraChairs = 4 - NumPeople;
             totalChairs = 4;
             numTables = 1;
         }
-        
     }
     
     public static int ExtraChairs()
     {
-        if (numPeople % 2 == 0){ return 0; }
+        if (NumPeople % 2 == 0){ return 0; }
         else{ return 1; }
     }
     
@@ -65,7 +141,7 @@ public class Group_Project {
         return ((numTables - 1) * 2) + 4;
     }
     
-    public static void priceCalculations()
+    public static void priceCalc()
     {
         initialPrice =  totalChairs * 20; //calculate initial Price
         taxValue = initialPrice * 0.07; //Calculate tax value
@@ -82,16 +158,48 @@ public class Group_Project {
             discount = initialPrice * 0.1;
             priceTotal = priceTotal - discount; //Calculate total price afer discount
         }
-        
     }
-      
-    public static void DisplayResults()
+    
+    public static void CustomOrder(int numPeople, int NumTables, int NumChairs)
     {
-        System.out.println("Number of people in your group: " + numPeople);
-        System.out.println("Number of tables: " + numTables);
-        System.out.println("Number of chairs: " + totalChairs);
-        System.out.println("Number of extra chairs: " + extraChairs);
+        NumPeople = numPeople;
+        numTables = NumTables;
+        totalChairs = NumChairs;
         
-        new Project_SaveInvoice_JForm().setVisible(true);
+        initialPrice =  totalChairs * 20; //calculate initial Price
+        taxValue = initialPrice * 0.07; //Calculate tax value
+        priceTotal = initialPrice + taxValue; //Calculate total price
+        
+        //Calculate discount if user is event planner
+        if (numTables >= 5 && numTables < 10)
+        {
+            discount = initialPrice * 0.05;
+            priceTotal = priceTotal - discount; //Calculate total price afer discount
+        }
+        else if (numTables >= 10)
+        {
+            discount = initialPrice * 0.1;
+            priceTotal = priceTotal - discount; //Calculate total price afer discount
+        }
+        
+        GenerateRecipt();
+    }
+
+    public static void GenerateRecipt()
+    {
+        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+        
+        Recipt =  "Humu Table Services" + "\n" + "_________________" + "\n" + "\n" 
+                + "Number of people in your group: " + NumPeople + "\n" 
+                + "Number of tables: " + numTables + "\n" 
+                + "Number of chairs: " + totalChairs + "\n"
+                + "Number of extra chairs: " + extraChairs + "\n" + "\n"
+                + "_________________" + "\n"
+                + "Subtotal: " + formatter.format(initialPrice)+ "\n"
+                + "Tax: " + formatter.format(taxValue) + "\n" 
+                + "Discount: " + formatter.format(discount) + "\n"
+                + "Total: " + formatter.format(priceTotal) + "\n";
+        
+        new Project_SaveInvoice_JF().setVisible(true);
     }
 }
