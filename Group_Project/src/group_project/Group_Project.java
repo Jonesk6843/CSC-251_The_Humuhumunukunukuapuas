@@ -33,7 +33,7 @@ public class Group_Project {
                     keep_going = false;
                     break;
                 case "2":
-                    Console();
+                    ConsoleQuestion();
                     keep_going = false;
                     break;
                 default:
@@ -43,7 +43,7 @@ public class Group_Project {
         }
     }
     
-    public static void Console(){
+    public static void ConsoleQuestion(){
         boolean keep_going = true;
         while(keep_going){
             System.out.print("Is this a custom order (y or n)\n>");
@@ -54,16 +54,19 @@ public class Group_Project {
                     keep_going = false;
                     break;
                 case "n":
+                    Console();
                     keep_going = false;
                     break;
                 default:
                     System.out.println("Please enter a valid option!");
                     break;
             }
-        }
-        
+        } 
+    }
+    
+    public static void Console(){
         //Get user inputs
-        System.out.print("How many people are in your party?: ");
+        System.out.print("1How many people are in your party?: ");
         while(!scnr.hasNextInt()) {
             System.out.println("Please enter a valid number!\n");
             scnr.next();
@@ -71,25 +74,53 @@ public class Group_Project {
         }
         NumPeople = scnr.nextInt();
         
+        // Ask if the user has a promo code
+        System.out.print("Do you have a promocode? (y or n)\n>");
+            boolean keep_going = true;
+            switch(scnr.next().toLowerCase())
+            {
+                case "y":
+                    promoCodeConsole();
+                    keep_going = false;
+                    break;
+                case "n":
+                    keep_going = false;
+                    //Calling calcluation methods and display results
+                    TableCalc();
+                    priceCalc();
+                    GenerateRecipt();
+                    break;
+                default:
+                    System.out.println("Please enter a valid option!");
+                    break;
+            }
+    }
+    public static void promoCodeConsole()
+    {
+        System.out.println("What is your promo-code?: ");
+        scnr.next();
+        
         //Calling calcluation methods and display results
         TableCalc();
         priceCalc();
         GenerateRecipt();
     }
-    
-    public static void CustomOrderConsole(){
+    public static void CustomOrderConsole()
+    {
         //Get num people
-        System.out.print("How many people are in your party?: ");
-        while(!scnr.hasNextInt()) {
+        System.out.print("2How many people are in your party?: ");
+        while(!scnr.hasNextInt()) 
+        {
             System.out.println("Please enter a valid number!\n");
             scnr.next();
-            System.out.print("How many people are in your party?: ");
+            System.out.print("3How many people are in your party?: ");
         }
         int numPeople = scnr.nextInt();
         
         // Get num tables
         System.out.print("How many tables do you need?: ");
-        while(!scnr.hasNextInt()) {
+        while(!scnr.hasNextInt()) 
+        {
             System.out.println("Please enter a valid number!\n");
             scnr.next();
             System.out.print("How many tables do you need?: ");
@@ -98,7 +129,8 @@ public class Group_Project {
         
         // Get num chairs
         System.out.print("How many chairs do you need?: ");
-        while(!scnr.hasNextInt()) {
+        while(!scnr.hasNextInt()) 
+        {
             System.out.println("Please enter a valid number!\n");
             scnr.next();
             System.out.print("How many chairs do you need?: ");
@@ -106,8 +138,24 @@ public class Group_Project {
         int NumChairs = scnr.nextInt();
         
         CustomOrder(numPeople, NumTables, NumChairs);
+        System.out.print("Do you have a promocode? (y or n)\n>");
+
+        switch(scnr.next().toLowerCase())
+        {
+            case "y":
+                promoCodeConsole();
+                break;
+            case "n":
+                //Calling calcluation methods and display results
+                TableCalc();
+                priceCalc();
+                GenerateRecipt();
+                break;
+            default:
+                System.out.println("Please enter a valid option!");
+                break;
+            }
     }
-    
     
     public static void TableCalc(){
         if (NumPeople >= 5)
@@ -181,8 +229,6 @@ public class Group_Project {
             discount = initialPrice * 0.1;
             priceTotal = priceTotal - discount; //Calculate total price afer discount
         }
-        
-        GenerateRecipt();
     }
 
     public static void GenerateRecipt()
