@@ -1,9 +1,10 @@
 package group_project;
-
 import java.text.NumberFormat;
 import java.util.*;
+import java.io.*;
 
-public class Group_Project {
+public class Group_Project 
+{
     public static Scanner scnr = new Scanner(System.in);
     
     //Declaring global variables
@@ -15,7 +16,6 @@ public class Group_Project {
     public static double discount;
     public static double taxValue;
     public static double priceTotal;
-    
     public static String Recipt;
     
     public static void main(String[] args) 
@@ -66,7 +66,7 @@ public class Group_Project {
     
     public static void Console(){
         //Get user inputs
-        System.out.print("1How many people are in your party?: ");
+        System.out.print("How many people are in your party?: ");
         while(!scnr.hasNextInt()) {
             System.out.println("Please enter a valid number!\n");
             scnr.next();
@@ -95,25 +95,16 @@ public class Group_Project {
                     break;
             }
     }
-    public static void promoCodeConsole()
-    {
-        System.out.println("What is your promo-code?: ");
-        scnr.next();
-        
-        //Calling calcluation methods and display results
-        TableCalc();
-        priceCalc();
-        GenerateRecipt();
-    }
+    
     public static void CustomOrderConsole()
     {
         //Get num people
-        System.out.print("2How many people are in your party?: ");
+        System.out.print("How many people are in your party?: ");
         while(!scnr.hasNextInt()) 
         {
             System.out.println("Please enter a valid number!\n");
             scnr.next();
-            System.out.print("3How many people are in your party?: ");
+            System.out.print("How many people are in your party?: ");
         }
         int numPeople = scnr.nextInt();
         
@@ -155,6 +146,32 @@ public class Group_Project {
                 System.out.println("Please enter a valid option!");
                 break;
             }
+    }
+    
+    public static void promoCodeConsole()
+    {
+        try
+        {
+            System.out.println("What is your promo-code?: ");
+            scnr.next();
+            
+            Scanner sc = new Scanner(new File("F:\\Promocodes.csv"));  
+            sc.useDelimiter(",");   //sets the delimiter pattern  
+            while (sc.hasNext())  //returns a boolean value  
+            {  
+                System.out.print(sc.next());  //find and returns the next complete token from this scanner  
+            }   
+            sc.close();  //closes the scanner  
+            
+            //Calling calcluation methods and display results
+            TableCalc();
+            priceCalc();
+            GenerateRecipt();
+        }
+        catch(Exception e) 
+        {
+            System.out.print("An error has occured.");
+        }
     }
     
     public static void TableCalc(){

@@ -87,10 +87,12 @@ public class Regular_Order_JF extends javax.swing.JFrame {
     private void Btn_ConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_ConfirmActionPerformed
         NumPeople = Integer.parseInt(CB_NumPeople.getSelectedItem().toString());
         
+        //Asking for promocode
+        new promocode_Request().setVisible(true);
+        
         //Calling calcluation methods and display results
         TableCalc();
         priceCalc();
-        GenerateRecipt();
         this.dispose();
     }//GEN-LAST:event_Btn_ConfirmActionPerformed
 
