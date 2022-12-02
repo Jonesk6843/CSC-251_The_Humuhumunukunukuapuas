@@ -5,6 +5,13 @@
  */
 package group_project;
 
+
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
 /**
  *
  * @author mclaughc1461
@@ -28,8 +35,7 @@ public class Login_JF
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
         usrnme_TF = new javax.swing.JTextField();
@@ -47,10 +53,8 @@ public class Login_JF
 
         submit_button.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         submit_button.setText("Submit");
-        submit_button.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        submit_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 submit_buttonActionPerformed(evt);
             }
         });
@@ -65,11 +69,12 @@ public class Login_JF
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(submit_button, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(usrnme_TF)
-                        .addComponent(pswrd_TF, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(usrnme_TF)
+                    .addComponent(pswrd_TF, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(submit_button, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -83,9 +88,9 @@ public class Login_JF
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(pswrd_TF, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(submit_button)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         pack();
@@ -93,7 +98,23 @@ public class Login_JF
 
     private void submit_buttonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_submit_buttonActionPerformed
     {//GEN-HEADEREND:event_submit_buttonActionPerformed
-        
+        boolean hasLoggedin = false;
+        List<Account> accountList = readCSVIntoAccount();
+        Account userAccount = new Account(usrnme_TF.getText(), pswrd_TF.getText());
+        for (Account account : accountList)
+        {
+            if (account.AccountName.equals(userAccount.AccountName) && account.AccountPassword.equals(userAccount.AccountPassword))
+            {
+                JOptionPane.showMessageDialog(null, "Account successfully logged in!");
+                hasLoggedin = true;
+                this.dispose();
+            }
+        }
+        if (hasLoggedin == false)
+        {
+            JOptionPane.showMessageDialog(null, "Invalid username or password!");
+        }
+            
     }//GEN-LAST:event_submit_buttonActionPerformed
 
     /**
@@ -101,6 +122,7 @@ public class Login_JF
      */
     public static void main(String args[])
     {
+        
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -157,7 +179,7 @@ public class Login_JF
             }
         });
     }
-    
+    // Account class
     public static class Account {
         private String AccountName;
         private String AccountPassword;
@@ -167,6 +189,27 @@ public class Login_JF
             AccountName = userName;
             AccountPassword = userPassword;
         }
+    }
+    // Reads the CSV file, puts into an list of accounts to use.
+    public static List<Account> readCSVIntoAccount()
+    {
+        List<Account> accountList = new ArrayList<>();   
+        String line;
+        try {
+            
+            BufferedReader br = new BufferedReader(new FileReader("Accounts.csv"));
+            while ((line = br.readLine()) != null)
+            {
+                String[] temp = line.split(",");
+                Account tempAccount = new Account(temp[0],temp[1]);
+                accountList.add(tempAccount); 
+            }
+        }
+        
+         catch(IOException e) {
+            System.out.print(e);
+         }
+        return accountList;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
