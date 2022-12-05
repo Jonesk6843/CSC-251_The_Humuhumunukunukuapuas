@@ -4,13 +4,16 @@
  * and open the template in the editor.
  */
 package group_project;
-
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
 import static group_project.Group_Project.GenerateRecipt;
-import static group_project.Group_Project.TableCalc;
-import static group_project.Group_Project.priceCalc;
 
 /**
- *
+ * THIS IS IN CIARA FOLDER!!!!
  * @author Jonesk6843
  */
 public class promo_Code
@@ -18,13 +21,13 @@ public class promo_Code
 {
 
     /**
-     * Creates new form promo_Code
+     * Creates new form promoCode
      */
     public promo_Code()
     {
         initComponents();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -37,12 +40,13 @@ public class promo_Code
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        promoCodeTextField = new javax.swing.JTextField();
         confirmButton = new javax.swing.JButton();
+        skip_Button = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("What is your pomocode?");
+        jLabel1.setText("What is your promocode?");
 
         jLabel2.setText("(Codes can not stack)");
 
@@ -56,23 +60,36 @@ public class promo_Code
             }
         });
 
+        skip_Button.setText("Skip");
+        skip_Button.setActionCommand("");
+        skip_Button.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                skip_ButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(10, 10, 10)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(confirmButton))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(promoCodeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2))))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(confirmButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(skip_Button, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -80,26 +97,63 @@ public class promo_Code
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(promoCodeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
-                .addComponent(confirmButton))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(confirmButton)
+                    .addComponent(skip_Button)))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_confirmButtonActionPerformed
     {//GEN-HEADEREND:event_confirmButtonActionPerformed
-        // TODO add your handling code here:
+        boolean codeValidation = false;
+        List<Code> codeList = readCSVIntoCode();
+        String userCode = promoCodeTextField.getText();
         
-        //Calling calcluation methods and display results
-        TableCalc();
-        priceCalc();
+        double discountValue = 0.0;
+        for (Code code : codeList)
+        {
+            if (code.codeName.toLowerCase().equals(userCode.toLowerCase()))
+            {
+                if (!code.LoginRequired) 
+                {
+                    codeValidation = true;
+                    discountValue = code.codeDiscount;
+                    
+                    //Calling calcluation methods and display results
+                    GenerateRecipt();
+                    Group_Project.GeneratePromoRecipt(userCode, discountValue);
+                    new Project_SaveInvoice_JF().setVisible(true);
+                    this.dispose();
+                }
+                else
+                {
+                    new Login_JF().setVisible(true);
+                    
+                }
+            }
+        }
+        if (codeValidation == false)
+        {
+            JOptionPane.showMessageDialog(null, "Sorry, that code is not valid!");
+            GenerateRecipt();
+            new Project_SaveInvoice_JF().setVisible(true);
+            this.dispose();
+        }
+    }//GEN-LAST:event_confirmButtonActionPerformed
+
+    private void skip_ButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_skip_ButtonActionPerformed
+    {//GEN-HEADEREND:event_skip_ButtonActionPerformed
+        //Display results
         GenerateRecipt();
         this.dispose();
-    }//GEN-LAST:event_confirmButtonActionPerformed
+    }//GEN-LAST:event_skip_ButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -162,11 +216,55 @@ public class promo_Code
             }
         });
     }
-
+// Account class
+    public static class Code {
+        private String codeName;
+        private String codeType;
+        private int codeChair;
+        private int codeTable;
+        private double codeDiscount;
+        private boolean LoginRequired;
+        public Code (String name, String type, int chair, int table, double discount, boolean loginRequired)
+        {
+            codeName = name;
+            codeType = type;
+            codeChair = chair;
+            codeTable = table;
+            codeDiscount = discount;
+            LoginRequired = loginRequired;
+        }
+    }
+    
+    //Reading Promocodes.csv file to array
+    public static List<Code> readCSVIntoCode()
+    {
+        List<Code> codeList = new ArrayList<>();   
+        String line;
+        try 
+        {
+            BufferedReader br = new BufferedReader(new FileReader("Promocodes.csv"));
+            while ((line = br.readLine()) != null)
+            {
+                String[] split = line.split(",");
+                boolean logreq = false;
+                if (split[5].toLowerCase().equals("t")){
+                    logreq = true;
+                }
+                Code tempCode = new Code(split[0], split[1], Integer.parseInt(split[2]), Integer.parseInt(split[3]), Double.parseDouble(split[4]), logreq);
+                codeList.add(tempCode); 
+            }
+        }
+         catch(IOException e) 
+         {
+            System.out.print(e);
+         }
+        return codeList;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton confirmButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField promoCodeTextField;
+    private javax.swing.JButton skip_Button;
     // End of variables declaration//GEN-END:variables
 }

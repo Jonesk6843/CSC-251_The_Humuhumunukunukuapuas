@@ -1,13 +1,13 @@
 Humu Table Services
 _________________
 
-Number of people in your group: 435
-Number of tables: 217
-Number of chairs: 436
+Number of people in your group: 25
+Number of tables: 12
+Number of chairs: 26
 Number of extra chairs: 1
 
 _________________
-Subtotal: $8,720.00
-Tax: $610.40
-Discount: $872.00
-Total: $8,458.40
+Subtotal: $520.00
+Tax: $36.40
+Discount: $52.00
+Total: $504.40

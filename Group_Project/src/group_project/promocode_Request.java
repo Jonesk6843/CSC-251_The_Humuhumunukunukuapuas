@@ -32,8 +32,7 @@ public class promocode_Request
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
         no_Button = new javax.swing.JButton();
@@ -45,20 +44,16 @@ public class promocode_Request
 
         no_Button.setText("No");
         no_Button.setActionCommand("No_Button");
-        no_Button.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        no_Button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 no_ButtonActionPerformed(evt);
             }
         });
 
         yes_Button.setText("Yes");
         yes_Button.setActionCommand("Yes_Button");
-        yes_Button.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        yes_Button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 yes_ButtonActionPerformed(evt);
             }
         });
@@ -90,6 +85,7 @@ public class promocode_Request
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void yes_ButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_yes_ButtonActionPerformed
@@ -101,9 +97,6 @@ public class promocode_Request
 
     private void no_ButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_no_ButtonActionPerformed
     {//GEN-HEADEREND:event_no_ButtonActionPerformed
-        // TODO add your handling code here:
-        TableCalc();
-        priceCalc();
         GenerateRecipt();
         this.dispose();
     }//GEN-LAST:event_no_ButtonActionPerformed

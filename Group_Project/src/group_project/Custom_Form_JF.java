@@ -115,6 +115,7 @@ public class Custom_Form_JF extends javax.swing.JFrame {
         
         CustomOrder(numPeople, numTables, numChairs);
         this.dispose();
+        new promocode_Request().setVisible(true);
     }//GEN-LAST:event_Btn_ConfirmActionPerformed
 
     /**

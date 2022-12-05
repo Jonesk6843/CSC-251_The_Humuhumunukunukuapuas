@@ -1,7 +1,10 @@
 package group_project;
-
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.*;
+import javax.swing.JOptionPane;
 
 public class Group_Project {
     public static Scanner scnr = new Scanner(System.in);
@@ -15,11 +18,12 @@ public class Group_Project {
     public static double discount;
     public static double taxValue;
     public static double priceTotal;
-    
+    public static String userTier;
     public static String Recipt;
     
     public static void main(String[] args) 
     {
+//        new Login_JF().setVisible(true);
         boolean keep_going = true;
         while(keep_going){
             System.out.print("How would you like to use this program?\n" +
@@ -64,10 +68,12 @@ public class Group_Project {
         } 
     }
     
-    public static void Console(){
+    public static void Console()
+    {
         //Get user inputs
-        System.out.print("1How many people are in your party?: ");
-        while(!scnr.hasNextInt()) {
+        System.out.print("How many people are in your party?: ");
+        while(!scnr.hasNextInt()) 
+        {
             System.out.println("Please enter a valid number!\n");
             scnr.next();
             System.out.print("How many people are in your party?: ");
@@ -95,25 +101,22 @@ public class Group_Project {
                     break;
             }
     }
+    
     public static void promoCodeConsole()
     {
         System.out.println("What is your promo-code?: ");
         scnr.next();
         
-        //Calling calcluation methods and display results
-        TableCalc();
-        priceCalc();
-        GenerateRecipt();
     }
     public static void CustomOrderConsole()
     {
         //Get num people
-        System.out.print("2How many people are in your party?: ");
+        System.out.print("How many people are in your party?: ");
         while(!scnr.hasNextInt()) 
         {
             System.out.println("Please enter a valid number!\n");
             scnr.next();
-            System.out.print("3How many people are in your party?: ");
+            System.out.print("How many people are in your party?: ");
         }
         int numPeople = scnr.nextInt();
         
@@ -245,7 +248,16 @@ public class Group_Project {
                 + "Tax: " + formatter.format(taxValue) + "\n" 
                 + "Discount: " + formatter.format(discount) + "\n"
                 + "Total: " + formatter.format(priceTotal) + "\n";
+    }
+    public static void GeneratePromoRecipt(String promoName, double discount)
+    {
+        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+        double newDiscount = initialPrice * discount;
+        double newTotal = priceTotal - newDiscount;
         
-        new Project_SaveInvoice_JF().setVisible(true);
+        Recipt += "_________________" + "\n" + "\n" + 
+                "Promocode: " + formatter.format(promoName) + "\n"
+                + "Procode Discount: " + formatter.format(newDiscount) + "\n"
+                + "New Total: " + formatter.format(newTotal);
     }
 }

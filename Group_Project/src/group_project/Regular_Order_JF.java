@@ -90,8 +90,8 @@ public class Regular_Order_JF extends javax.swing.JFrame {
         //Calling calcluation methods and display results
         TableCalc();
         priceCalc();
-        GenerateRecipt();
         this.dispose();
+        new promocode_Request().setVisible(true);
     }//GEN-LAST:event_Btn_ConfirmActionPerformed
 
     /**
