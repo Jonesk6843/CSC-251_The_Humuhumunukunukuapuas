@@ -4,13 +4,18 @@
  * and open the template in the editor.
  */
 package group_project;
-
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
 import static group_project.Group_Project.GenerateRecipt;
 import static group_project.Group_Project.TableCalc;
 import static group_project.Group_Project.priceCalc;
 
 /**
- *
+ * THIS IS IN CIARA FOLDER!!!!
  * @author Jonesk6843
  */
 public class promo_Code
@@ -32,8 +37,7 @@ public class promo_Code
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -42,16 +46,14 @@ public class promo_Code
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("What is your pomocode?");
+        jLabel1.setText("What is your promocode?");
 
         jLabel2.setText("(Codes can not stack)");
 
         confirmButton.setText("Confirm");
         confirmButton.setActionCommand("confirm_Button");
-        confirmButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        confirmButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 confirmButtonActionPerformed(evt);
             }
         });
@@ -68,13 +70,13 @@ public class promo_Code
                             .addComponent(jLabel1)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(promoCodeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(promoCodeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel2)))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(58, 58, 58)
+                        .addGap(60, 60, 60)
                         .addComponent(confirmButton)))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -92,47 +94,31 @@ public class promo_Code
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-public static class Code 
-    {
-        //Declaring variables
-        String codeName;
-        String codeType;
-        int codeChairs;
-        int codeTables;
-        double codeDiscount;
-        
-        //Constructor
-        public Code(String codeName, String codeType, int codeChairs, int codeTables, double codeDiscount) 
-        {
-           System.out.println("Code Chosen: " + codeName );
-           System.out.println("This code's for:" + codeType);
-           System.out.println("How many extra chairs?:" + codeChairs);
-           System.out.println("How many extra tables?:" + codeTables);
-           System.out.println("Discount value:" + codeDiscount);
-        }
 
-        public void setValues ( String name, String type, int chairs, int tables, double discount ) 
-        {
-           codeName = name;
-           codeType = type;
-           codeChairs = chairs;
-           codeTables = tables;
-           codeDiscount = discount;
-        }
-
-        public String setName( ) 
-        {
-           System.out.println(codeName);
-           return codeName;
-        }
-    }
     private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_confirmButtonActionPerformed
     {//GEN-HEADEREND:event_confirmButtonActionPerformed
-        //Calling calcluation methods and display results
-        TableCalc();
-        priceCalc();
-        GenerateRecipt();
-        this.dispose();
+        boolean codeValidation = false;
+        List<Code> codeList = readCSVIntoCode();
+        Code userCode = new Code(promoCodeTextField.getText());
+        for (Code code : codeList)
+        {
+            if (code.codeName.equals(userCode.codeName))
+            {
+                JOptionPane.showMessageDialog(null, "The code is valid!");
+                codeValidation = true;
+                
+                //Calling calcluation methods and display results
+                TableCalc();
+                priceCalc();
+                GenerateRecipt();
+                this.dispose();
+            }
+        }
+        if (codeValidation == false)
+        {
+            JOptionPane.showMessageDialog(null, "Sorry, that code is not valid!");
+        }
+        
     }//GEN-LAST:event_confirmButtonActionPerformed
 
     /**
@@ -196,7 +182,55 @@ public static class Code
             }
         });
     }
+// Account class
+    public static class Code {
+        private String codeName;
+        private String codeType;
+        private int codeChair;
+        private int codeTable;
+        private double codeDiscount;
+        public Code (String name, String type, int chair, int table, double discount)
+        {
+            codeName = name;
+            codeType = type;
+            codeChair = chair;
+            codeTable = table;
+            codeDiscount = discount;
+        }
+    }
+    //Declaring variables
+    private static Code createCode(String[] metadata) {
+        String name = metadata[0];
+        String type = metadata[1];
+        int chair = Integer.parseInt(metadata[2]);
+        int table =  Integer.parseInt(metadata[3]);
+        double price = Double.parseDouble(metadata[4]);
 
+        // create and return book of this metadata
+        return new Code(name, type, chair, table, price);
+    }
+    
+    //Reading Promocodes.csv file to array
+    public static List<Code> readCSVIntoCode()
+    {
+        List<Code> codeList = new ArrayList<>();   
+        String line;
+        try {
+            
+            BufferedReader br = new BufferedReader(new FileReader("Promocodes.csv"));
+            while ((line = br.readLine()) != null)
+            {
+                String[] split = line.split(",");
+                Code tempCode = new Code(split[0], split[1], split[2], split[3], split[4]);
+                codeList.add(tempCode); 
+            }
+        }
+        
+         catch(IOException e) {
+            System.out.print(e);
+         }
+        return codeList;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton confirmButton;
     private javax.swing.JLabel jLabel1;

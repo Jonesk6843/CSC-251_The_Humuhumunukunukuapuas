@@ -1,10 +1,14 @@
 package group_project;
+
+import static group_project.promo_Code.readCSVIntoCode;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.*;
-import java.io.*;
+import javax.swing.JOptionPane;
 
-public class Group_Project 
-{
+public class Group_Project {
     public static Scanner scnr = new Scanner(System.in);
     
     //Declaring global variables
@@ -16,6 +20,7 @@ public class Group_Project
     public static double discount;
     public static double taxValue;
     public static double priceTotal;
+    
     public static String Recipt;
     
     public static void main(String[] args) 
@@ -66,7 +71,7 @@ public class Group_Project
     
     public static void Console(){
         //Get user inputs
-        System.out.print("How many people are in your party?: ");
+        System.out.print("1How many people are in your party?: ");
         while(!scnr.hasNextInt()) {
             System.out.println("Please enter a valid number!\n");
             scnr.next();
@@ -96,15 +101,41 @@ public class Group_Project
             }
     }
     
+    public static void promoCodeConsole()
+    {
+        System.out.println("What is your promo-code?: ");
+        scnr.next();
+        
+        boolean codeValidation = false;
+        List<promo_Code.Code> codeList = readCSVIntoCode();
+        promo_Code.Code userCode = new promo_Code.Code(promoCodeTextField.getText());
+        for (promo_Code.Code code : codeList)
+        {
+            if (code.codeName.equals(userCode.codeName))
+            {
+                JOptionPane.showMessageDialog(null, "The code is valid!");
+                codeValidation = true;
+                
+                //Calling calcluation methods and display results
+                TableCalc();
+                priceCalc();
+                GenerateRecipt();
+            }
+        }
+        if (codeValidation == false)
+        {
+            JOptionPane.showMessageDialog(null, "Sorry, that code is not valid!");
+        }
+    }
     public static void CustomOrderConsole()
     {
         //Get num people
-        System.out.print("How many people are in your party?: ");
+        System.out.print("2How many people are in your party?: ");
         while(!scnr.hasNextInt()) 
         {
             System.out.println("Please enter a valid number!\n");
             scnr.next();
-            System.out.print("How many people are in your party?: ");
+            System.out.print("3How many people are in your party?: ");
         }
         int numPeople = scnr.nextInt();
         
@@ -146,32 +177,6 @@ public class Group_Project
                 System.out.println("Please enter a valid option!");
                 break;
             }
-    }
-    
-    public static void promoCodeConsole()
-    {
-        try
-        {
-            System.out.println("What is your promo-code?: ");
-            scnr.next();
-            
-            Scanner sc = new Scanner(new File("F:\\Promocodes.csv"));  
-            sc.useDelimiter(",");   //sets the delimiter pattern  
-            while (sc.hasNext())  //returns a boolean value  
-            {  
-                System.out.print(sc.next());  //find and returns the next complete token from this scanner  
-            }   
-            sc.close();  //closes the scanner  
-            
-            //Calling calcluation methods and display results
-            TableCalc();
-            priceCalc();
-            GenerateRecipt();
-        }
-        catch(Exception e) 
-        {
-            System.out.print("An error has occured.");
-        }
     }
     
     public static void TableCalc(){
@@ -264,5 +269,27 @@ public class Group_Project
                 + "Total: " + formatter.format(priceTotal) + "\n";
         
         new Project_SaveInvoice_JF().setVisible(true);
+    }
+    
+    //Reading Promocodes.csv file to array
+    public static List<promo_Code.Code> readCSVIntoCode()
+    {
+        List<promo_Code.Code> codeList = new ArrayList<>();   
+        String line;
+        try {
+            
+            BufferedReader br = new BufferedReader(new FileReader("Promocodes.csv"));
+            while ((line = br.readLine()) != null)
+            {
+                String[] split = line.split(",");
+                promo_Code.Code tempCode = new promo_Code.Code(split[0], split[1], split[2], split[3], split[4]);
+                codeList.add(tempCode); 
+            }
+        }
+        
+         catch(IOException e) {
+            System.out.print(e);
+         }
+        return codeList;
     }
 }

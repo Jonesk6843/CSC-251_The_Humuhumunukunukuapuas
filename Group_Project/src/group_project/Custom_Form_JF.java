@@ -5,7 +5,6 @@
 package group_project;
 
 import static group_project.Group_Project.CustomOrder;
-import static group_project.Group_Project.GenerateRecipt;
 
 /**
  *
@@ -19,13 +18,13 @@ public class Custom_Form_JF extends javax.swing.JFrame {
     public Custom_Form_JF() {
         initComponents();
         
-        for(int i = 1; i <= 200; i++)
-        {
+        for(int i = 1; i <= 200; i++){
             String num = Integer.toString(i);
             CB_NumPeople.addItem(num);
             CB_NumTables.addItem(num);
             CB_NumChairs.addItem(num);
         }
+        
     }
 
     /**
@@ -115,10 +114,8 @@ public class Custom_Form_JF extends javax.swing.JFrame {
         int numChairs = Integer.parseInt(CB_NumChairs.getSelectedItem().toString());
         
         CustomOrder(numPeople, numTables, numChairs);
-        
-        //Asking for promocode
-        new promocode_Request().setVisible(true);
         this.dispose();
+        new promocode_Request().setVisible(true);
     }//GEN-LAST:event_Btn_ConfirmActionPerformed
 
     /**
