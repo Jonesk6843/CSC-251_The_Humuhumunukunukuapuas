@@ -1,10 +1,13 @@
 package group_project;
+import static group_project.promo_Code.discountValue;
+import static group_project.promo_Code.userCode;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.*;
 import javax.swing.JOptionPane;
+
 
 public class Group_Project {
     public static Scanner scnr = new Scanner(System.in);
@@ -18,7 +21,9 @@ public class Group_Project {
     public static double discount;
     public static double taxValue;
     public static double priceTotal;
+    
     public static String userTier;
+    
     public static String Recipt;
     
     public static void main(String[] args) 
@@ -80,6 +85,10 @@ public class Group_Project {
         }
         NumPeople = scnr.nextInt();
         
+        // Call table and price calculation methods
+        TableCalc();
+        priceCalc();
+        
         // Ask if the user has a promo code
         System.out.print("Do you have a promocode? (y or n)\n>");
             boolean keep_going = true;
@@ -91,10 +100,9 @@ public class Group_Project {
                     break;
                 case "n":
                     keep_going = false;
-                    //Calling calcluation methods and display results
-                    TableCalc();
-                    priceCalc();
+                    // Call GenerateRecipt method and display SaveInvoiceMethod
                     GenerateRecipt();
+                    new Project_SaveInvoice_JF().setVisible(true);
                     break;
                 default:
                     System.out.println("Please enter a valid option!");
@@ -104,8 +112,36 @@ public class Group_Project {
     
     public static void promoCodeConsole()
     {
+        //Declaring variables
+        boolean codeValidation = false;
+        List<Code> codeList = readCSVIntoCode();
+        discountValue = 0.0;
+        
+        // Ask the user for their promocode
         System.out.println("What is your promo-code?: ");
-        scnr.next();
+        userCode = scnr.next();
+        for (Code code : codeList)
+        {
+            if (code.codeName.toLowerCase().equals(userCode.toLowerCase()))
+            {
+                if (!code.LoginRequired) 
+                {
+                    codeValidation = true;
+                    discountValue = code.codeDiscount;
+                    
+                    //Calling calcluation methods and display results
+                    GenerateRecipt();
+                    GeneratePromoRecipt();
+                    new Project_SaveInvoice_JF().setVisible(true);
+                }
+            }
+        }
+        if (codeValidation == false)
+        {
+            JOptionPane.showMessageDialog(null, "Sorry, that code is not valid!");
+            GenerateRecipt();
+            new Project_SaveInvoice_JF().setVisible(true);
+        }
         
     }
     public static void CustomOrderConsole()
@@ -140,9 +176,11 @@ public class Group_Project {
         }
         int NumChairs = scnr.nextInt();
         
+        // Calling customOrder calcluation methods
         CustomOrder(numPeople, NumTables, NumChairs);
+        
+        // Ask if the user has a promocode.
         System.out.print("Do you have a promocode? (y or n)\n>");
-
         switch(scnr.next().toLowerCase())
         {
             case "y":
@@ -150,9 +188,9 @@ public class Group_Project {
                 break;
             case "n":
                 //Calling calcluation methods and display results
-                TableCalc();
-                priceCalc();
+                
                 GenerateRecipt();
+                new Project_SaveInvoice_JF().setVisible(true);
                 break;
             default:
                 System.out.println("Please enter a valid option!");
@@ -249,15 +287,59 @@ public class Group_Project {
                 + "Discount: " + formatter.format(discount) + "\n"
                 + "Total: " + formatter.format(priceTotal) + "\n";
     }
-    public static void GeneratePromoRecipt(String promoName, double discount)
+    public static void GeneratePromoRecipt()
     {
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
-        double newDiscount = initialPrice * discount;
+        double newDiscount = initialPrice * discountValue;
         double newTotal = priceTotal - newDiscount;
         
         Recipt += "_________________" + "\n" + "\n" + 
-                "Promocode: " + formatter.format(promoName) + "\n"
+                "Promocode: " + userCode + "\n"
                 + "Procode Discount: " + formatter.format(newDiscount) + "\n"
                 + "New Total: " + formatter.format(newTotal);
+    }
+    // Code class
+    public static class Code {
+        private String codeName;
+        private String codeType;
+        private int codeChair;
+        private int codeTable;
+        private double codeDiscount;
+        private boolean LoginRequired;
+        public Code (String name, String type, int chair, int table, double discount, boolean loginRequired)
+        {
+            codeName = name;
+            codeType = type;
+            codeChair = chair;
+            codeTable = table;
+            codeDiscount = discount;
+            LoginRequired = loginRequired;
+        }
+    }
+    
+    //Reading Promocodes.csv file to array
+    public static List<Code> readCSVIntoCode()
+    {
+        List<Code> codeList = new ArrayList<>();   
+        String line;
+        try 
+        {
+            BufferedReader br = new BufferedReader(new FileReader("Promocodes.csv"));
+            while ((line = br.readLine()) != null)
+            {
+                String[] split = line.split(",");
+                boolean logreq = false;
+                if (split[5].toLowerCase().equals("t")){
+                    logreq = true;
+                }
+                Code tempCode = new Code(split[0], split[1], Integer.parseInt(split[2]), Integer.parseInt(split[3]), Double.parseDouble(split[4]), logreq);
+                codeList.add(tempCode); 
+            }
+        }
+         catch(IOException e) 
+         {
+            System.out.print(e);
+         }
+        return codeList;
     }
 }

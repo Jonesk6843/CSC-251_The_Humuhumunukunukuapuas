@@ -79,6 +79,7 @@ public class Project_SaveInvoice_JF
         }
         
         this.dispose();
+        System.exit(0);
     }//GEN-LAST:event_SI_FileChooserActionPerformed
 
     /**

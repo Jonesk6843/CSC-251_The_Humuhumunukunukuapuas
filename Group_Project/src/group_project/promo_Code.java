@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package group_project;
+import static group_project.Group_Project.GeneratePromoRecipt;
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,15 +12,16 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import static group_project.Group_Project.GenerateRecipt;
+import static group_project.Group_Project.userTier;
 
 /**
- * THIS IS IN CIARA FOLDER!!!!
  * @author Jonesk6843
  */
 public class promo_Code
-        extends javax.swing.JFrame
+    extends javax.swing.JFrame
 {
-
+    public static String userCode;
+    public static double discountValue;
     /**
      * Creates new form promoCode
      */
@@ -35,8 +37,7 @@ public class promo_Code
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -52,20 +53,16 @@ public class promo_Code
 
         confirmButton.setText("Confirm");
         confirmButton.setActionCommand("confirm_Button");
-        confirmButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        confirmButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 confirmButtonActionPerformed(evt);
             }
         });
 
         skip_Button.setText("Skip");
         skip_Button.setActionCommand("");
-        skip_Button.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        skip_Button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 skip_ButtonActionPerformed(evt);
             }
         });
@@ -100,10 +97,11 @@ public class promo_Code
                 .addComponent(promoCodeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(confirmButton)
-                    .addComponent(skip_Button)))
+                    .addComponent(skip_Button)
+                    .addComponent(confirmButton))
+                .addContainerGap())
         );
 
         pack();
@@ -112,46 +110,15 @@ public class promo_Code
 
     private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_confirmButtonActionPerformed
     {//GEN-HEADEREND:event_confirmButtonActionPerformed
-        boolean codeValidation = false;
-        List<Code> codeList = readCSVIntoCode();
-        String userCode = promoCodeTextField.getText();
-        
-        double discountValue = 0.0;
-        for (Code code : codeList)
-        {
-            if (code.codeName.toLowerCase().equals(userCode.toLowerCase()))
-            {
-                if (!code.LoginRequired) 
-                {
-                    codeValidation = true;
-                    discountValue = code.codeDiscount;
-                    
-                    //Calling calcluation methods and display results
-                    GenerateRecipt();
-                    Group_Project.GeneratePromoRecipt(userCode, discountValue);
-                    new Project_SaveInvoice_JF().setVisible(true);
-                    this.dispose();
-                }
-                else
-                {
-                    new Login_JF().setVisible(true);
-                    
-                }
-            }
-        }
-        if (codeValidation == false)
-        {
-            JOptionPane.showMessageDialog(null, "Sorry, that code is not valid!");
-            GenerateRecipt();
-            new Project_SaveInvoice_JF().setVisible(true);
-            this.dispose();
-        }
+        userCode = promoCodeTextField.getText();
+        validatePromo();
     }//GEN-LAST:event_confirmButtonActionPerformed
 
     private void skip_ButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_skip_ButtonActionPerformed
     {//GEN-HEADEREND:event_skip_ButtonActionPerformed
-        //Display results
+        //  Display results
         GenerateRecipt();
+        new Project_SaveInvoice_JF().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_skip_ButtonActionPerformed
 
@@ -216,8 +183,9 @@ public class promo_Code
             }
         });
     }
-// Account class
-    public static class Code {
+    // Code class
+    public static class Code 
+    {
         private String codeName;
         private String codeType;
         private int codeChair;
@@ -235,7 +203,61 @@ public class promo_Code
         }
     }
     
-    //Reading Promocodes.csv file to array
+    public static void returnedLogin(){
+        if (userTier.toLowerCase().equals(userCode.toLowerCase()))
+        {
+            // Calling calcluation methods and display results
+            GenerateRecipt();
+            GeneratePromoRecipt();
+            new Project_SaveInvoice_JF().setVisible(true);
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Sorry, that promo code is not availible to your tier.");
+        }
+    }
+    
+    public void validatePromo(){
+        boolean codeValidation = false;
+        List<Code> codeList = readCSVIntoCode();
+        
+        for (Code code : codeList)
+        {
+            if (code.codeName.toLowerCase().equals(userCode.toLowerCase()))
+            {
+                if (!code.LoginRequired) 
+                {
+                    codeValidation = true;
+                    discountValue = code.codeDiscount;
+                    
+                    // Calling calcluation methods and display results
+                    GenerateRecipt();
+                    GeneratePromoRecipt();
+                    new Project_SaveInvoice_JF().setVisible(true);
+                    this.dispose();
+                }
+                else{
+                    if (userTier == null){
+                        new Login_JF().setVisible(true);
+                        discountValue = code.codeDiscount;
+                    }
+                    else if (userTier.toLowerCase().equals(userCode.toLowerCase())){
+                        discountValue = code.codeDiscount;
+                        
+                        // Calling generate methods and display results
+                        GenerateRecipt();
+                        GeneratePromoRecipt();
+                        new Project_SaveInvoice_JF().setVisible(true);
+                        this.dispose();
+                    }
+                    else if (!userTier.toLowerCase().equals(userCode.toLowerCase())){
+                        JOptionPane.showMessageDialog(null, "Sorry, that promo code is not availible to your tier.");
+                    }
+                }
+            }
+        }
+    }
+    
+    // Reading Promocodes.csv file to array
     public static List<Code> readCSVIntoCode()
     {
         List<Code> codeList = new ArrayList<>();   

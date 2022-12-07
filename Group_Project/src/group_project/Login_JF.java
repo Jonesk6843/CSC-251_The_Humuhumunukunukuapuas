@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import static group_project.Group_Project.userTier;
 /**
  *
  * @author mclaughc1461
@@ -90,30 +91,35 @@ public class Login_JF
                     .addComponent(pswrd_TF, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(submit_button)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void submit_buttonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_submit_buttonActionPerformed
     {//GEN-HEADEREND:event_submit_buttonActionPerformed
-        boolean hasLoggedin = false;
         List<Account> accountList = readCSVIntoAccount();
-        Account userAccount = new Account(usrnme_TF.getText(), pswrd_TF.getText());
+        
+        String userAccount = usrnme_TF.getText();
+        String userPass = pswrd_TF.getText();
+        
         for (Account account : accountList)
         {
-            if (account.AccountName.equals(userAccount.AccountName) && account.AccountPassword.equals(userAccount.AccountPassword))
+            if (account.AccountName.toLowerCase().equals(userAccount.toLowerCase()))
             {
-                JOptionPane.showMessageDialog(null, "Account successfully logged in!");
-                hasLoggedin = true;
-                
-                this.dispose();
+                if (account.AccountPassword.equals(userPass)){
+                    userTier = account.AccountTier;
+                    JOptionPane.showMessageDialog(null, "Account successfully logged in!\n\nYour tier is: " + userTier);
+                    promo_Code.returnedLogin();
+                    
+                    this.dispose();
+                }
             }
         }
-        if (hasLoggedin == false)
-        {
-            JOptionPane.showMessageDialog(null, "Invalid username or password!");
+        if (userTier == null){
+            JOptionPane.showMessageDialog(null, "Account doesn't exist or the password was incorrect.");
         }
             
     }//GEN-LAST:event_submit_buttonActionPerformed

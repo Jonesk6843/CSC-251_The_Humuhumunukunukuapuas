@@ -98,6 +98,7 @@ public class promocode_Request
     private void no_ButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_no_ButtonActionPerformed
     {//GEN-HEADEREND:event_no_ButtonActionPerformed
         GenerateRecipt();
+        new Project_SaveInvoice_JF().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_no_ButtonActionPerformed
 
